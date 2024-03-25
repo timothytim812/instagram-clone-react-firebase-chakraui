@@ -1,13 +1,12 @@
-import React from 'react'
-import AuthComponent from '../../components/Auth/Main'
-
+import React from "react";
+import AuthMainComponent from "../../components/Auth/Main";
 
 const AuthPage = () => {
   return (
     <>
-    <AuthComponent/>
+      <AuthMainComponent />
     </>
-  )
-}
+  );
+};
 
-export default AuthPage
+export default AuthPage;

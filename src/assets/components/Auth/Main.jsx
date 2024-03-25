@@ -2,7 +2,7 @@ import { Box, Container, Flex, Image, VStack } from "@chakra-ui/react";
 import { useState } from "react";
 import AuthForm from "./AuthForm";
 
-const AuthComponent = () => {
+const AuthMainComponent = () => {
   const [isHovered, setIsHovered] = useState(false);
   return (
     <>
@@ -24,7 +24,6 @@ const AuthComponent = () => {
               <Image src="/images/Auth/auth_img-bg.png" h={650} alt="img" />
               <Box
                 position="absolute"
-                P
                 top={-5}
                 left={-109}
                 width="100%"
@@ -40,8 +39,6 @@ const AuthComponent = () => {
                       : "/images/Auth/auth_img_1.png"
                   }
                   h={560}
-                  transition="transform 1s ease-in-out"
-                  transform={isHovered ? "scale(1)" : "scale(1)"}
                   alt="overlay"
                   onMouseEnter={() => setIsHovered(true)}
                   onMouseLeave={() => setIsHovered(false)}
@@ -63,4 +60,4 @@ const AuthComponent = () => {
   );
 };
 
-export default AuthComponent;
+export default AuthMainComponent;

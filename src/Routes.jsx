@@ -10,13 +10,13 @@ const ProjectRoutes = () => {
       element: <NotFound />,
     },
     {
-        path: "/",
-        element: <AuthPage />,
+      path: "/auth",
+      element: <AuthPage />,
     },
     {
-      path: "/home",
-      element: <HomePage/>,
-  }
+      path: "/",
+      element: <HomePage />,
+    },
   ]);
 
   return element;

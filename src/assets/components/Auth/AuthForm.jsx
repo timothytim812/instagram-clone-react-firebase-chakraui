@@ -29,7 +29,7 @@ const AuthForm = () => {
       setErrorMessage("Please fill the datails");
       return;
     }
-    navigate("/home");
+    navigate("/");
   };
 
   return (
