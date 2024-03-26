@@ -22,7 +22,7 @@ const SideBarItems = [
   },
   {
     icon: (
-      <Avatar size={"sm"} name="Emily" src="/images/home/profile-pic.jpg" />
+      <Avatar size={"sm"} name="Timothy Benjamin" src="/images/home/profile-pic.jpg" />
     ),
     text: "Profile",
     link: "/",
