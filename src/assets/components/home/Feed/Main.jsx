@@ -27,7 +27,7 @@ const FeedMain = () => {
               <SkeletonCircle size={10} />
               <VStack gap={2} alignItems={"center"} justifyContent={"center"}>
                 <Skeleton height={"10px"} w={"200px"} />
-                {/* <Skeleton height={"10px"} w={"200px"} /> */}//actual instagram
+                {/* <Skeleton height={"10px"} w={"200px"} /> */}
               </VStack>
             </Flex>
             <Skeleton w={"full"}>
