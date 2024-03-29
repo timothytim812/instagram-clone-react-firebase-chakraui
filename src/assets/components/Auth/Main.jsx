@@ -1,6 +1,7 @@
 import { Box, Container, Flex, Image, VStack } from "@chakra-ui/react";
 import { useState } from "react";
-import AuthForm from "./AuthForm";
+import AuthForm from "./AuthSpecifics/AuthForm";
+
 
 const AuthMainComponent = () => {
   const [isHovered, setIsHovered] = useState(false);
