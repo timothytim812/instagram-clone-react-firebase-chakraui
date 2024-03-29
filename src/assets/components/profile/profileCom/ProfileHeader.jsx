@@ -6,8 +6,16 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
+import { useAuthStore, useProfileStore } from "../../../../store/store";
 
 const ProfileHeader = () => {
+  const { userProfile } = useProfileStore();
+
+  const authUser = useAuthStore((state) => state.user);
+
+  const visitingOwnProfile = authUser && authUser.username === userProfile.username;
+  const visitingAnotherProfile = authUser && authUser.username !== userProfile.username;
+
   return (
     <>
       <Flex
@@ -21,7 +29,7 @@ const ProfileHeader = () => {
           alignSelf={"flex-start"}
           mx={"auto"}
         >
-          <Avatar name="Timothy Benjamin" src="/images/home/profile-pic.jpg" />
+          <Avatar src={userProfile.profilePicURL} />
         </AvatarGroup>
 
         <VStack alignItems={"start"} gap={2} mx={"auto"} flex={1}>
@@ -32,37 +40,53 @@ const ProfileHeader = () => {
             alignItems={"center"}
             w={"full"}
           >
-            <Text fontSize={{ base: "sm", md: "lg" }}>timothy_benjamin</Text>
-            <Flex gap={4} alignItems={"center"} justifyContent={"center"}>
-              <Button size={{ base: "xs", md: "sm" }}>Edit Profile</Button>
-            </Flex>
+            <Text fontSize={{ base: "sm", md: "lg" }}>
+              {userProfile.username}
+            </Text>
+
+            {visitingOwnProfile && (
+              <>
+                <Flex gap={4} alignItems={"center"} justifyContent={"center"}>
+                  <Button size={{ base: "xs", md: "sm" }}>Edit Profile</Button>
+                </Flex>
+              </>
+            )}
+            {visitingAnotherProfile && (
+              <>
+                <Flex gap={4} alignItems={"center"} justifyContent={"center"}>
+                  <Button size={{ base: "xs", md: "sm" }} bg={'blue.400'} _hover={{bg:'blue.500'}}>Follow</Button>
+                </Flex>
+              </>
+            )}
           </Flex>
 
           {/* status */}
           <Flex alignItems={"center"} gap={{ base: 2, sm: 4 }}>
             <Text>
               <Text as={"span"} fontWeight={"bold"} mr={1}>
-                4
+                {userProfile.posts.length}
               </Text>
               Posts
             </Text>
             <Text>
               <Text as={"span"} fontWeight={"bold"} mr={1}>
-                1000
+                {userProfile.followers.length}
               </Text>
               Followers
             </Text>
             <Text>
               <Text as={"span"} fontWeight={"bold"} mr={1}>
-                100
+                {userProfile.following.length}
               </Text>
               Following
             </Text>
           </Flex>
-          <Flex alignItems={'center'} gap={4}>
-            <Text fontSize={{base:'xs',md:'sm'}} fontWeight={'bold'}>Timothy Benjamin </Text>
+          <Flex alignItems={"center"} gap={4}>
+            <Text fontSize={{ base: "xs", md: "sm" }} fontWeight={"bold"}>
+              {userProfile.fullname}{" "}
+            </Text>
           </Flex>
-          <Text fontSize={{base:'xs',md:'sm'}} > “When you have a dream, you’ve got to grab it and never let go.”  </Text>
+          <Text fontSize={{ base: "xs", md: "sm" }}> {userProfile.bio} </Text>
         </VStack>
       </Flex>
     </>

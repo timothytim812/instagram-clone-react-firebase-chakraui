@@ -1,14 +1,44 @@
-import { Box, Flex, Link as ChakraLink, Tooltip, Button } from "@chakra-ui/react";
+import { Box, Flex, Link as ChakraLink, Tooltip, Button, Avatar } from "@chakra-ui/react";
 import React from "react";
 import { Link } from "react-router-dom";
-import { InstagramLogo, InstagramMobileLogo } from "../../images/logos";
-import SideBarItems from "../../images/sideBarItems";
+import { CreatePostLogo, InstagramLogo, InstagramMobileLogo, NotificationsLogo, SearchLogo } from "../../images/logos";
 import { BiLogOut } from "react-icons/bi";
 import useLogout from "../custom/useLogout";
+import { AiFillHome } from "react-icons/ai";
+import { useAuthStore} from "../../../store/store";
 
 const SideBar = () => {
 
   const {handleLogout,isLoggingOut} = useLogout();
+
+  const authUser = useAuthStore((state) => state.user);
+
+  const SideBarItems = [
+    {
+      icon: <AiFillHome size={25} />,
+      text: "Home",
+      link: "/",
+    },
+    {
+      icon: <SearchLogo />,
+      text: "Search",
+    },
+    {
+      icon: <NotificationsLogo />,
+      text: "Notifications",
+    },
+    {
+      icon: <CreatePostLogo />,
+      text: "Create",
+    },
+    {
+      icon: (
+        <Avatar size={"sm"} name={authUser.fullname} src={authUser.profilePicURL} />
+      ),
+      text: "Profile",
+      link: `${authUser?.username}`,
+    },
+  ];
 
   return (
     <>
