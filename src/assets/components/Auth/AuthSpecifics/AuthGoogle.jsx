@@ -19,7 +19,7 @@ const AuthGoogle = ({ prefix }) => {
         return;
       }
 
-      const userRef = doc(db, "users", newUser.user.uid);
+      const userRef = doc(firestore, "users", newUser.user.uid);
       const userSnap = await getDoc(userRef);
 
       if (userSnap.exists()) {
