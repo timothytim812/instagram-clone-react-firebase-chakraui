@@ -13,8 +13,10 @@ const ProfileHeader = () => {
 
   const authUser = useAuthStore((state) => state.user);
 
-  const visitingOwnProfile = authUser && authUser.username === userProfile.username;
-  const visitingAnotherProfile = authUser && authUser.username !== userProfile.username;
+  const visitingOwnProfile =
+    authUser && authUser.username === userProfile.username;
+  const visitingAnotherProfile =
+    authUser && authUser.username !== userProfile.username;
 
   return (
     <>
@@ -54,7 +56,13 @@ const ProfileHeader = () => {
             {visitingAnotherProfile && (
               <>
                 <Flex gap={4} alignItems={"center"} justifyContent={"center"}>
-                  <Button size={{ base: "xs", md: "sm" }} bg={'blue.400'} _hover={{bg:'blue.500'}}>Follow</Button>
+                  <Button
+                    size={{ base: "xs", md: "sm" }}
+                    bg={"blue.400"}
+                    _hover={{ bg: "blue.500" }}
+                  >
+                    Follow
+                  </Button>
                 </Flex>
               </>
             )}

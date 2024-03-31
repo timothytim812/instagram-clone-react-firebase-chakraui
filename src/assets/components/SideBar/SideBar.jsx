@@ -1,15 +1,27 @@
-import { Box, Flex, Link as ChakraLink, Tooltip, Button, Avatar } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  Link as ChakraLink,
+  Tooltip,
+  Button,
+  Avatar,
+} from "@chakra-ui/react";
 import React from "react";
 import { Link } from "react-router-dom";
-import { CreatePostLogo, InstagramLogo, InstagramMobileLogo, NotificationsLogo, SearchLogo } from "../../images/logos";
+import {
+  CreatePostLogo,
+  InstagramLogo,
+  InstagramMobileLogo,
+  NotificationsLogo,
+  SearchLogo,
+} from "../../images/logos";
 import { BiLogOut } from "react-icons/bi";
 import useLogout from "../custom/useLogout";
 import { AiFillHome } from "react-icons/ai";
-import { useAuthStore} from "../../../store/store";
+import { useAuthStore } from "../../../store/store";
 
 const SideBar = () => {
-
-  const {handleLogout,isLoggingOut} = useLogout();
+  const { handleLogout, isLoggingOut } = useLogout();
 
   const authUser = useAuthStore((state) => state.user);
 
@@ -33,7 +45,11 @@ const SideBar = () => {
     },
     {
       icon: (
-        <Avatar size={"sm"} name={authUser.fullname} src={authUser.profilePicURL} />
+        <Avatar
+          size={"sm"}
+          name={authUser.fullname}
+          src={authUser.profilePicURL}
+        />
       ),
       text: "Profile",
       link: `${authUser?.username}`,
@@ -112,9 +128,8 @@ const SideBar = () => {
             openDelay={500}
             display={{ base: "block", md: "none" }}
           >
-
             <Flex
-            onClick={handleLogout}
+              onClick={handleLogout}
               alignItems={"center"}
               gap={4}
               _hover={{ bg: "whiteAlpha.400" }}
@@ -124,10 +139,15 @@ const SideBar = () => {
               w={{ base: 10, md: "full" }}
               justifyContent={{ base: "center", md: "flex-start" }}
             >
-
               <BiLogOut size={25} />
-              <Button display={{ base: "none", md: "block" }}
-              variant={'ghost'} _hover={{bg:'transparent'}} isLoading={isLoggingOut}>Log out</Button>
+              <Button
+                display={{ base: "none", md: "block" }}
+                variant={"ghost"}
+                _hover={{ bg: "transparent" }}
+                isLoading={isLoggingOut}
+              >
+                Log out
+              </Button>
             </Flex>
           </Tooltip>
         </Flex>
