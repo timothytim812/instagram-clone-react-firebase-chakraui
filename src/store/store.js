@@ -10,5 +10,5 @@ export const useAuthStore = create((set) => ({
 export const useProfileStore = create((set) => ({
   userProfile: null,
   setUserProfile: (userProfile) => set({ userProfile }),
-  // adPost:()
+  // addPost:()
 }));

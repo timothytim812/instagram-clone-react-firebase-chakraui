@@ -25,7 +25,7 @@ const SideBarNotification = () => {
           justifyContent={{ base: "center", md: "flex-start" }}
         >
           <NotificationsLogo />
-          <Box display={{ base: "none", md: "block" }}>notifications</Box>
+          <Box display={{ base: "none", md: "block" }}>Notifications</Box>
         </ChakraLink>
       </Tooltip>
     </>

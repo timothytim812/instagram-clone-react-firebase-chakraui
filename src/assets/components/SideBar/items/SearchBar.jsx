@@ -1,10 +1,37 @@
-import { Box, Link as ChakraLink, Tooltip } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
+import {
+  Box,
+  Button,
+  Flex,
+  FormControl,
+  FormLabel,
+  Input,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalHeader,
+  ModalOverlay,
+  Tooltip,
+  useDisclosure,
+} from "@chakra-ui/react";
 import { SearchLogo } from "../../../images/logos";
+import useSearch from "../../custom/useSearch";
+import { useRef } from "react";
+import SuggestionUsers from "../../home/suggestionFeed/suggestions/SuggestionUsers";
 
 const SideBarSearchBar = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const searchRef = useRef(null);
+  const {user,setUser,isLoading,getUserProfile} = useSearch();
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    getUserProfile(searchRef.current.value);
+  }
+
   return (
-    <Tooltip
+    <>
+      <Tooltip
         hasArrow
         label={"Search"}
         placement="right"
@@ -12,9 +39,7 @@ const SideBarSearchBar = () => {
         openDelay={500}
         display={{ base: "block", md: "none" }}
       >
-        <ChakraLink
-          as={Link}
-          display={"flex"}
+        <Flex
           alignItems={"center"}
           gap={4}
           _hover={{ bg: "whiteAlpha.400" }}
@@ -22,12 +47,42 @@ const SideBarSearchBar = () => {
           p={2}
           w={{ base: 10, md: "full" }}
           justifyContent={{ base: "center", md: "flex-start" }}
+          onClick={onOpen}
         >
-          <SearchLogo/>
+          <SearchLogo />
           <Box display={{ base: "none", md: "block" }}>Search</Box>
-        </ChakraLink>
+        </Flex>
       </Tooltip>
-  )
-}
+
+      <Modal isOpen={isOpen} onClose={onClose} motionPreset="slideInLeft">
+        <ModalOverlay />
+        <ModalContent bg={"black"} border={"1px solid gray"} maxW={"400px"}>
+          <ModalHeader>Search User</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody pb={6}>
+            <form onSubmit={handleSearch}>
+              <FormControl>
+                <FormLabel>Username</FormLabel>
+                <Input placeholder="Enter User Name" ref={searchRef} />
+              </FormControl>
+              <Flex w={"full"} justifyContent={"flex-end"}>
+                <Button
+                  type="submit"
+                  ml={"auto"}
+                  size={"sm"}
+                  my={4}
+                  isLoading={isLoading}
+                >
+                  Search
+                </Button>
+              </Flex>
+            </form>
+            {user && <SuggestionUsers user={user} setUser={setUser}/>}
+          </ModalBody>
+        </ModalContent>
+      </Modal>
+    </>
+  );
+};
 
 export default SideBarSearchBar;

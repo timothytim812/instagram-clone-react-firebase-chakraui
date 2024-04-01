@@ -26,7 +26,7 @@ const useFollow = (userId) => {
       await updateDoc(userFollowUnFollowRef, {
         followers: isFollowing
           ? arrayRemove(authUser.uid)
-          : arrayRemove(authUser.uid),
+          : arrayUnion(authUser.uid),
       });
 
       if (isFollowing) {
@@ -54,6 +54,7 @@ const useFollow = (userId) => {
           ...authUser,
           following: [...authUser.following, userId],
         });
+
         setUserProfile({
           ...userProfile,
           followers: [...userProfile.followers, authUser.uid],
