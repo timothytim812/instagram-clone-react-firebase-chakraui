@@ -1,20 +1,28 @@
 import { Avatar, Box, Button, Flex, VStack } from "@chakra-ui/react";
-import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import useFollow from "../../../custom/useFollow";
 import { useAuthStore } from "../../../../../store/store";
+import { useContext } from "react";
+import { SearchContext } from "../../../../../App";
 
-const SuggestionUsers = ({ user, setUser }) => {
-  const { isFollowing, isLoading, handleUserFollow } = useFollow(user.uid);
+const SuggestionUsers = ({user}) => {
+
+  const {updateUser} = useContext(SearchContext);
+
+  const { isFollowing, isUpdating, handleUserFollow } = useFollow(user.uid);
   const authUser = useAuthStore((state) => state.user);
 
   const onFollow = async () => {
     await handleUserFollow();
-    setUser({
+
+    updateUser({
       ...user,
       followers: isFollowing
         ? user.followers.filter((follower) => follower.uid !== authUser.uid)
         : [...user.followers, authUser],
+      following: isFollowing
+        ? user.following.filter((following) => following.uid !== authUser.uid)
+        : [...user.following, authUser],
     });
   };
 
@@ -22,9 +30,9 @@ const SuggestionUsers = ({ user, setUser }) => {
     <>
       <Flex justifyContent={"space-between"} alignItems={"center"} w={"full"}>
         <Flex alignItems={"center"} gap={2}>
-          <Avatar src={user.profilePicURL} size={"md"} />
+          <Avatar src={user?.profilePicURL} size={"md"} />
           <VStack spacing={2} alignItems={"flex-start"}>
-            <Link to={`${user?.username}`} fontSize={12} fontWeight={"bold"}>
+            <Link to={`/${user?.username}`} fontSize={12} fontWeight={"bold"}>
               {user.fullname}
             </Link>
             <Box fontSize={11} color={"gray.500"}>
@@ -42,7 +50,7 @@ const SuggestionUsers = ({ user, setUser }) => {
             fontSize={13}
             _hover={{ color: "white", bg: "transparent" }}
             cursor={"pointer"}
-            isLoading={isLoading}
+            isLoading={isUpdating}
             onClick={onFollow}
           >
             {isFollowing ? "Unfollow" : "Follow"}

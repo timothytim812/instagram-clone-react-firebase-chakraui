@@ -22,7 +22,7 @@ const ProfileHeader = () => {
   const visitingAnotherProfile =
     authUser && authUser.username !== userProfile.username;
 
-  const { isFollowing, isLoading, handleUserFollow } = useFollow(
+  const { isFollowing, isUpdating, handleUserFollow } = useFollow(
     userProfile?.uid
   );
 
@@ -70,7 +70,7 @@ const ProfileHeader = () => {
                     size={{ base: "xs", md: "sm" }}
                     bg={"blue.400"}
                     _hover={{ bg: "blue.500" }}
-                    isLoading={isLoading}
+                    isLoading={isUpdating}
                     onClick={handleUserFollow}
                   >
                     {isFollowing ? "unFollow" : "Follow"}

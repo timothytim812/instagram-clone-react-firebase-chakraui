@@ -1,7 +1,7 @@
 import { Box, Container, Flex } from "@chakra-ui/react";
 import React from "react";
 import FeedMain from "./Feed/Main";
-// import SuggestionMain from "./suggestionFeed/Main";
+import SuggestionMain from "./suggestionFeed/Main";
 
 const HomeMainComponent = () => {
   return (
@@ -17,7 +17,7 @@ const HomeMainComponent = () => {
             display={{ base: "none", lg: "block" }}
             maxW={"300px"}
           >
-            {/* <SuggestionMain/> */}
+            <SuggestionMain/>
           </Box>
         </Flex>
       </Container>

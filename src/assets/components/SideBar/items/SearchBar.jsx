@@ -15,14 +15,17 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { SearchLogo } from "../../../images/logos";
-import useSearch from "../../custom/useSearch";
-import { useRef } from "react";
+import {  useContext, useRef } from "react";
 import SuggestionUsers from "../../home/suggestionFeed/suggestions/SuggestionUsers";
+import { SearchContext } from "../../../../App";
+
 
 const SideBarSearchBar = () => {
+
+  const {user,getUserProfile,isUpdating} = useContext(SearchContext)
+
   const { isOpen, onOpen, onClose } = useDisclosure();
   const searchRef = useRef(null);
-  const {user,setUser,isLoading,getUserProfile} = useSearch();
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -71,13 +74,18 @@ const SideBarSearchBar = () => {
                   ml={"auto"}
                   size={"sm"}
                   my={4}
-                  isLoading={isLoading}
+                  isLoading={isUpdating}
                 >
                   Search
                 </Button>
               </Flex>
             </form>
-            {user && <SuggestionUsers user={user} setUser={setUser}/>}
+            {user && 
+            <>
+            <SuggestionUsers user={user}/>
+            </>
+          }
+            
           </ModalBody>
         </ModalContent>
       </Modal>

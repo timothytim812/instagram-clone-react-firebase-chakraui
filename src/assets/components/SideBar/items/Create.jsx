@@ -1,9 +1,33 @@
-import { Box, Link as ChakraLink, Tooltip } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
+import {
+  Box,
+  Button,
+  CloseButton,
+  Flex,
+  Image,
+  Input,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  Textarea,
+  Tooltip,
+  useDisclosure,
+} from "@chakra-ui/react";
 import { CreatePostLogo } from "../../../images/logos";
-
+import { BsFillImageFill } from "react-icons/bs";
+import { useRef, useState } from "react";
+import usePicturePreview from "../../custom/usePicturePreview";
 
 const SideBarCreate = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [caption, setCaption] = useState("");
+  const imgRef = useRef(null);
+  const { handleFileChange, selectedFile, setSelectedFile } =
+    usePicturePreview();
+
   return (
     <>
       <Tooltip
@@ -14,9 +38,7 @@ const SideBarCreate = () => {
         openDelay={500}
         display={{ base: "block", md: "none" }}
       >
-        <ChakraLink
-          as={Link}
-          display={"flex"}
+        <Flex
           alignItems={"center"}
           gap={4}
           _hover={{ bg: "whiteAlpha.400" }}
@@ -24,13 +46,65 @@ const SideBarCreate = () => {
           p={2}
           w={{ base: 10, md: "full" }}
           justifyContent={{ base: "center", md: "flex-start" }}
+          onClick={onOpen}
         >
-          <CreatePostLogo/>
+          <CreatePostLogo />
           <Box display={{ base: "none", md: "block" }}>Create</Box>
-        </ChakraLink>
+        </Flex>
       </Tooltip>
+      <Modal isOpen={isOpen} onClose={onClose} size="xl">
+        <ModalOverlay />
+
+        <ModalContent bg={"black"} border={"1px solid gray"}>
+          <ModalHeader>Create Post</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody pb={6}>
+            <Textarea
+              placeholder="Post caption..."
+              value={caption}
+              onChange={(e) => setCaption(e.target.value)}
+            />
+
+            <Input type="file" hidden ref={imgRef} onChange={handleFileChange}/>
+
+            <BsFillImageFill
+              style={{
+                marginTop: "15px",
+                marginLeft: "5px",
+                cursor: "pointer",
+              }}
+              size={16}
+              onClick={() => imgRef.current.click()}
+            />
+            {selectedFile && (
+              <>
+                <Flex
+                  mt={5}
+                  w={"full"}
+                  position={"relative"}
+                  justifyContent={"center"}
+                >
+                  <Image src={selectedFile} alt="selected img" />
+                  <CloseButton
+                    position={"absolute"}
+                    top={2}
+                    right={2}
+                    onClick={() => {
+                      setSelectedFile(null);
+                    }}
+                  />
+                </Flex>
+              </>
+            )}
+          </ModalBody>
+
+          <ModalFooter>
+            <Button mr={3}>Post</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </>
-  )
-}
+  );
+};
 
 export default SideBarCreate;
