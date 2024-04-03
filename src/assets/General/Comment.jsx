@@ -1,6 +1,7 @@
 import { Avatar, Flex, Skeleton, SkeletonCircle, Text } from "@chakra-ui/react";
 import useGetUserOfComment from "../components/custom/useGetUserOfComment";
 import { Link } from "react-router-dom";
+import { CreatedAtTimeConversion} from "../utils/CreatedAtTimeConversion";
 
 const Comment = ({ comment }) => {
   const { isLoading, commentedUser } = useGetUserOfComment(comment.createdBy);
@@ -33,7 +34,7 @@ const Comment = ({ comment }) => {
 					<Text fontSize={14}>{comment.comment}</Text>
 				</Flex>
 				<Text fontSize={12} color={"gray"}>
-					{(commentedUser.createdAt)}
+					{CreatedAtTimeConversion(comment.createdAt)}
 				</Text>
 			</Flex>
 		</Flex>

@@ -1,5 +1,6 @@
 import { Box, Flex, Text } from "@chakra-ui/react";
-import { BsBookmark, BsGrid3X3, BsSuitHeart } from "react-icons/bs";
+import { BsBookmark, BsGrid3X3 } from "react-icons/bs";
+import { FaRegHeart } from "react-icons/fa";
 
 const ProfileTabs = () => {
   return (
@@ -34,7 +35,7 @@ const ProfileTabs = () => {
         </Flex>
         <Flex alignItems={"center"} p={3} cursor={"pointer"}>
           <Box fontSize={20}>
-            <BsSuitHeart />
+          <FaRegHeart size={22} />
           </Box>
           <Text fontSize={12} px={2} display={{ base: "none", sm: "block" }}>
             Likes

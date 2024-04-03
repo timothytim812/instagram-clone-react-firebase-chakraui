@@ -14,6 +14,7 @@ import {
   Tooltip,
   useDisclosure,
 } from "@chakra-ui/react";
+import { IoSearch } from "react-icons/io5";
 import { SearchLogo } from "../../../images/logos";
 import {  useContext, useRef } from "react";
 import SuggestionUsers from "../../home/suggestionFeed/suggestions/SuggestionUsers";
@@ -52,7 +53,7 @@ const SideBarSearchBar = () => {
           justifyContent={{ base: "center", md: "flex-start" }}
           onClick={onOpen}
         >
-          <SearchLogo />
+          <IoSearch size={25} />
           <Box display={{ base: "none", md: "block" }}>Search</Box>
         </Flex>
       </Tooltip>

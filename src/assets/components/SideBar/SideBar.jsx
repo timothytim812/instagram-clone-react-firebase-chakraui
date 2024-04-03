@@ -14,6 +14,7 @@ import {
 import { BiLogOut } from "react-icons/bi";
 import useLogout from "../custom/useLogout";
 import SideBarItems from "./compile/SideBarItems";
+import { FaInstagram } from "react-icons/fa";
 
 const SideBar = () => {
   const { handleLogout, isLoggingOut } = useLogout();
@@ -50,7 +51,7 @@ const SideBar = () => {
             w={10}
             cursor={"pointer"}
           >
-            <InstagramMobileLogo />
+            <FaInstagram size={25}/>
           </ChakraLink>
           <Flex direction={"column"} gap={5} cursor={"pointer"}>
             <SideBarItems/>

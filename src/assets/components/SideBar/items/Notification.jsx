@@ -1,6 +1,7 @@
 import { Box, Link as ChakraLink, Tooltip } from "@chakra-ui/react";
 import { NotificationsLogo } from "../../../images/logos";
 import { Link } from "react-router-dom";
+import { FaRegHeart } from "react-icons/fa";
 
 const SideBarNotification = () => {
   return (
@@ -24,7 +25,7 @@ const SideBarNotification = () => {
           w={{ base: 10, md: "full" }}
           justifyContent={{ base: "center", md: "flex-start" }}
         >
-          <NotificationsLogo />
+          <FaRegHeart size={22} />
           <Box display={{ base: "none", md: "block" }}>Notifications</Box>
         </ChakraLink>
       </Tooltip>

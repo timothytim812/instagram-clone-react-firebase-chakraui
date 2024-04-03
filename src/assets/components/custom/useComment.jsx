@@ -16,11 +16,11 @@ const useComment = () => {
     setIsCommenting(true);
 
     const newComment = {
-      comment: comment,
-      createdAt: Date.now(),
-      createdBy: authUser.uid,
-      postId: postId,
-    };
+			comment,
+			createdAt: Date.now(),
+			createdBy: authUser.uid,
+			postId,
+		};
 
     try {
       await updateDoc(doc(firestore, "posts", postId), {

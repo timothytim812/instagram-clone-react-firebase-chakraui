@@ -1,6 +1,7 @@
 import { Avatar, Flex, Text } from "@chakra-ui/react";
 import { useProfileStore } from "../../store/store";
 import { Link } from "react-router-dom";
+import { CreatedAtTimeConversion } from "../utils/CreatedAtTimeConversion";
 
 const Caption = ({ post,isLoading }) => {
   const userProfile = useProfileStore((state) => state.userProfile);
@@ -35,7 +36,7 @@ const Caption = ({ post,isLoading }) => {
           <Text fontSize={14}>{post.caption}</Text>
         </Flex>
         <Text fontSize={12} color={"gray"}>
-          {post.createdAt}
+          {CreatedAtTimeConversion(post.createdAt)}
         </Text>
       </Flex>
     </Flex>
