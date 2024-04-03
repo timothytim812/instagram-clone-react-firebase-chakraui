@@ -20,13 +20,29 @@ import { CreatePostLogo } from "../../../images/logos";
 import { BsFillImageFill } from "react-icons/bs";
 import { useRef, useState } from "react";
 import usePicturePreview from "../../custom/usePicturePreview";
+import useCreatePost from "../../custom/useCreatePost";
+import useShowToast from "../../custom/useShowToast";
 
 const SideBarCreate = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const showToast = useShowToast();
   const [caption, setCaption] = useState("");
   const imgRef = useRef(null);
   const { handleFileChange, selectedFile, setSelectedFile } =
     usePicturePreview();
+
+  const { isUpdating, handleCreatePost } = useCreatePost();
+
+  const handlePostCreation = async () => {
+    try {
+      await handleCreatePost(selectedFile, caption);
+      onClose();
+      setCaption();
+      setSelectedFile(null);
+    } catch (e) {
+      showToast("Error", e.message, "error");
+    }
+  };
 
   return (
     <>
@@ -65,7 +81,12 @@ const SideBarCreate = () => {
               onChange={(e) => setCaption(e.target.value)}
             />
 
-            <Input type="file" hidden ref={imgRef} onChange={handleFileChange}/>
+            <Input
+              type="file"
+              hidden
+              ref={imgRef}
+              onChange={handleFileChange}
+            />
 
             <BsFillImageFill
               style={{
@@ -99,7 +120,9 @@ const SideBarCreate = () => {
           </ModalBody>
 
           <ModalFooter>
-            <Button mr={3}>Post</Button>
+            <Button mr={3} onClick={handlePostCreation} isLoading={isUpdating}>
+              Post
+            </Button>
           </ModalFooter>
         </ModalContent>
       </Modal>

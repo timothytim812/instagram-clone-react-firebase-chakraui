@@ -29,7 +29,6 @@ const SideBarProfile = () => {
         >
           <Avatar
             size={"sm"}
-            name={authUser?.fullname}
             src={authUser?.profilePicURL}
           />
           <Box display={{ base: "none", md: "block" }}>Profile</Box>

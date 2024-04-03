@@ -20,9 +20,15 @@ import { FaComment } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import Comment from "../../../General/Comment";
 import PostFooter from "../../home/Feed/Post/PostFooter";
+import { useAuthStore, useProfileStore } from "../../../../store/store";
+import Caption from "../../../General/Caption";
+import useDeletePost from "../../custom/useDeletePost";
 
-const ProfilePost = ({ img }) => {
+const ProfilePost = ({ post }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const userProfile = useProfileStore((state) => state.userProfile);
+  const authUser = useAuthStore((state) => state.user);
+  const {handleDeletePost,isDeleting} = useDeletePost(post);
 
   return (
     <>
@@ -50,20 +56,20 @@ const ProfilePost = ({ img }) => {
             <Flex>
               <AiFillHeart size={20} />
               <Text fontWeight={"bold"} ml={2}>
-                7
+                {post.likes.length}
               </Text>
             </Flex>
             <Flex>
               <FaComment size={20} />
               <Text fontWeight={"bold"} ml={2}>
-                1
+                {post.comments.length}
               </Text>
             </Flex>
           </Flex>
         </Flex>
 
         <Image
-          src={img}
+          src={post.imageURL}
           alt="profile post"
           w={"100%"}
           h={"100%"}
@@ -85,8 +91,8 @@ const ProfilePost = ({ img }) => {
               gap={4}
               w={{ base: "90%", sm: "70%", md: "full" }}
               mx={"auto"}
-							maxH={"90vh"}
-							minH={"50vh"}
+              maxH={"90vh"}
+              minH={"50vh"}
             >
               <Flex
                 borderRadius={4}
@@ -95,9 +101,15 @@ const ProfilePost = ({ img }) => {
                 borderColor={"whiteAlpha.300"}
                 flex={1.5}
                 justifyContent={"center"}
-								alignItems={"center"}
+                alignItems={"center"}
               >
-                <Image src={img} alt="profile post" height={'100%'} width={'100%'} objectFit={"cover"} />
+                <Image
+                  src={post.imageURL}
+                  alt="profile post"
+                  height={"100%"}
+                  width={"100%"}
+                  objectFit={"cover"}
+                />
               </Flex>
               <Flex
                 flex={1}
@@ -108,23 +120,27 @@ const ProfilePost = ({ img }) => {
                 <Flex alignItems={"center"} justifyContent={"space-between"}>
                   <Flex alignItems={"center"} gap={4}>
                     <Avatar
-                      src={"/images/home/profile-pic.jpg"}
+                      src={userProfile.profilePicURL}
                       size={"sm"}
                       name="Timothy Benjamin"
                     />
                     <Text fontWeight={"bold"} fontSize={12}>
-                      timothy_benjamin
+                      {userProfile.username}
                     </Text>
                   </Flex>
-                  <Button
-											size={"sm"}
-											bg={"transparent"}
-											_hover={{ bg: "whiteAlpha.300", color: "red.600" }}
-											borderRadius={4}
-											p={1}
-										>
-											<MdDelete size={20} cursor='pointer' />
-										</Button>
+                  {authUser?.uid === userProfile.uid && (
+                    <Button
+                      size={"sm"}
+                      bg={"transparent"}
+                      _hover={{ bg: "whiteAlpha.300", color: "red.600" }}
+                      borderRadius={4}
+                      p={1}
+                      isLoading={isDeleting}
+                      onClick={handleDeletePost}
+                    >
+                      <MdDelete size={20} cursor="pointer" />
+                    </Button>
+                  )}
                 </Flex>
                 <Divider my={4} bg={"gray.400"} />
                 <VStack
@@ -133,6 +149,7 @@ const ProfilePost = ({ img }) => {
                   maxH={"350px"}
                   overflowY={"auto"}
                 >
+                  <Caption post={post} />
                   <Comment
                     timeline={"1min ago"}
                     username={"mercedes_ig"}
@@ -145,15 +162,9 @@ const ProfilePost = ({ img }) => {
                     profilePic={"/images/home/img3.jpg"}
                     text={"Hi from Spaceship!"}
                   />
-                  <Comment
-                    timeline={"1hr ago"}
-                    username={"sunshine_ig"}
-                    profilePic={"/images/home/img1.jpg"}
-                    text={"Looking Handsome ❤️"}
-                  />
                 </VStack>
-                <Divider my={4} bg={'gray.800'}/>
-                <PostFooter isProfilePage={true}/> 
+                <Divider my={4} bg={"gray.800"} />
+                <PostFooter isProfilePage={true} />
               </Flex>
             </Flex>
           </ModalBody>

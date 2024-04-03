@@ -33,7 +33,7 @@ const SuggestionUsers = ({user}) => {
           <Avatar src={user?.profilePicURL} size={"md"} />
           <VStack spacing={2} alignItems={"flex-start"}>
             <Link to={`/${user?.username}`} fontSize={12} fontWeight={"bold"}>
-              {user.fullname}
+              {user.username}
             </Link>
             <Box fontSize={11} color={"gray.500"}>
               {user.followers.length} followers
