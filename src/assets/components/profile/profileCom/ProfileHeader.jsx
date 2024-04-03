@@ -66,15 +66,26 @@ const ProfileHeader = () => {
             {visitingAnotherProfile && (
               <>
                 <Flex gap={4} alignItems={"center"} justifyContent={"center"}>
-                  <Button
-                    size={{ base: "xs", md: "sm" }}
-                    bg={"blue.400"}
-                    _hover={{ bg: "blue.500" }}
-                    isLoading={isUpdating}
-                    onClick={handleUserFollow}
-                  >
-                    {isFollowing ? "unFollow" : "Follow"}
-                  </Button>
+                  {isFollowing ? (
+                    <Button
+                      size={{ base: "xs", md: "sm" }}
+                      _hover={{ bg: "gray.700"}}
+                      isLoading={isUpdating}
+                      onClick={handleUserFollow}
+                    >
+                      following
+                    </Button>
+                  ) : (
+                    <Button
+                      size={{ base: "xs", md: "sm" }}
+                      bg={"blue.400"}
+                      _hover={{ bg: "blue.500" }}
+                      isLoading={isUpdating}
+                      onClick={handleUserFollow}
+                    >
+                      Follow
+                    </Button>
+                  )}
                 </Flex>
               </>
             )}

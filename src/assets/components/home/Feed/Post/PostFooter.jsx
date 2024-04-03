@@ -13,10 +13,15 @@ import {
   NotificationsLogo,
   UnlikeLogo,
 } from "../../../../images/logos";
+import useComment from "../../../custom/useComment";
+import { useAuthStore } from "../../../../../store/store";
 
-const PostFooter = ({ username, isProfilePage }) => {
+const PostFooter = ({ username, isProfilePage, post }) => {
   const [liked, setLiked] = useState(false);
   const [likes, setLikes] = useState(10000);
+  const {handleCommenting,isCommenting} = useComment();
+  const [comment,setComment] = useState('');
+  const authUser = useAuthStore(state => state.user)
 
   const handleLike = () => {
     if (liked) {
@@ -27,6 +32,11 @@ const PostFooter = ({ username, isProfilePage }) => {
       setLikes(likes + 1);
     }
   };
+
+  const handleSubmitComment = async() => {
+    await handleCommenting(post.id,comment);
+    setComment('');
+  }
 
   return (
     <>
@@ -57,7 +67,8 @@ const PostFooter = ({ username, isProfilePage }) => {
           </>
         )}
 
-        <Flex
+        {authUser && (
+          <Flex
           alignItems={"center"}
           gap={2}
           justifyContent={"space-between"}
@@ -68,6 +79,8 @@ const PostFooter = ({ username, isProfilePage }) => {
               variant={"flushed"}
               placeholder="Add a comment....."
               fontSize={14}
+              value={comment}
+              onChange={(e)=> setComment(e.target.value)}
             />
             <InputRightElement>
               <Button
@@ -77,12 +90,15 @@ const PostFooter = ({ username, isProfilePage }) => {
                 fontSize={14}
                 _hover={{ bg: "transparent", color: "white" }}
                 cursor={"pointer"}
+                isLoading={isCommenting}
+                onClick={handleSubmitComment}
               >
                 Post
               </Button>
             </InputRightElement>
           </InputGroup>
         </Flex>
+        )}
       </Box>
     </>
   );

@@ -1,6 +1,5 @@
 import {
   Avatar,
-  Box,
   Button,
   Divider,
   Flex,
@@ -24,7 +23,7 @@ import { useAuthStore, useProfileStore } from "../../../../store/store";
 import Caption from "../../../General/Caption";
 import useDeletePost from "../../custom/useDeletePost";
 
-const ProfilePost = ({ post }) => {
+const ProfilePost = ({ post,isLoading }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const userProfile = useProfileStore((state) => state.userProfile);
   const authUser = useAuthStore((state) => state.user);
@@ -149,22 +148,15 @@ const ProfilePost = ({ post }) => {
                   maxH={"350px"}
                   overflowY={"auto"}
                 >
-                  <Caption post={post} />
-                  <Comment
-                    timeline={"1min ago"}
-                    username={"mercedes_ig"}
-                    profilePic={"/images/home/img4.jpg"}
-                    text={"that's good shot"}
-                  />
-                  <Comment
-                    timeline={"13mins ago"}
-                    username={"sunshine_ig"}
-                    profilePic={"/images/home/img3.jpg"}
-                    text={"Hi from Spaceship!"}
-                  />
+                  {post.caption && <Caption post={post} />}
+                  {post.comments.map((comment) =>(
+                    <>
+                    <Comment key={comment.id} comment={comment} isLoading={isLoading} />
+                    </>
+                  ))}
                 </VStack>
                 <Divider my={4} bg={"gray.800"} />
-                <PostFooter isProfilePage={true} />
+                <PostFooter isProfilePage={true} post={post} />
               </Flex>
             </Flex>
           </ModalBody>

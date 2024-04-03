@@ -35,7 +35,7 @@ const ProfileGrid = () => {
             <>
             {posts.map((post) => (
               <>
-              <ProfilePost post={post} key={post.id}/>
+              <ProfilePost post={post} isLoading={isLoading} key={post.id}/>
               </>
             ))}
             </>
