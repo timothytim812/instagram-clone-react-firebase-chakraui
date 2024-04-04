@@ -15,23 +15,15 @@ import {
 } from "../../../../images/logos";
 import useComment from "../../../custom/useComment";
 import { useAuthStore } from "../../../../../store/store";
+import useLike from "../../../custom/useLike";
 
 const PostFooter = ({ username, isProfilePage, post }) => {
-  const [liked, setLiked] = useState(false);
-  const [likes, setLikes] = useState(10000);
   const {handleCommenting,isCommenting} = useComment();
   const [comment,setComment] = useState('');
-  const authUser = useAuthStore(state => state.user)
+  const authUser = useAuthStore(state => state.user);
+  // const {handleLikes,isLiked,isUpdating,likes}=useLike(post);
 
-  const handleLike = () => {
-    if (liked) {
-      setLiked(false);
-      setLikes(likes - 1);
-    } else {
-      setLiked(true);
-      setLikes(likes + 1);
-    }
-  };
+
 
   const handleSubmitComment = async() => {
     await handleCommenting(post.id,comment);
@@ -41,9 +33,9 @@ const PostFooter = ({ username, isProfilePage, post }) => {
   return (
     <>
       <Box mb={10} mt={"auto"}>
-        <Flex alignItems={"center"} gap={4} w={"full"} pt={0} mb={2} mt={3}>
-          <Box onClick={handleLike} cursor={"pointer"} fontSize={18}>
-            {!liked ? <NotificationsLogo /> : <UnlikeLogo />}
+        {/* <Flex alignItems={"center"} gap={4} w={"full"} pt={0} mb={2} mt={3}>
+          <Box onClick={handleLikes} cursor={"pointer"} fontSize={18}>
+            {!isLiked ? <NotificationsLogo /> : <UnlikeLogo />}
           </Box>
           <Box cursor={"pointer"} fontSize={18}>
             <CommentLogo />
@@ -51,12 +43,12 @@ const PostFooter = ({ username, isProfilePage, post }) => {
         </Flex>
         <Text fontWeight={600} fontSize={"sm"} mb={1}>
           {likes} likes
-        </Text>
+        </Text> */}
 
         {!isProfilePage && (
           <>
             <Text fontWeight={"bold"} fontSize={"sm"} mb={2}>
-              {username}{" "}
+              {username}
               <Text as={"span"} fontWeight={400}>
                 Lladuno times 💫
               </Text>

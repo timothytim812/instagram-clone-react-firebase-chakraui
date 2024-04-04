@@ -20,57 +20,24 @@ const useFollow = (userId) => {
       await updateDoc(currentUserRef, {
         following: isFollowing ? arrayRemove(userId) : arrayUnion(userId),
       });
-
       await updateDoc(userToFollowOrUnfollorRef, {
         followers: isFollowing
           ? arrayRemove(authUser.uid)
           : arrayUnion(authUser.uid),
       });
 
-      if (isFollowing) {
-        // unfollow
-        setAuthUser({
-          ...authUser,
-          following: authUser.following.filter((uid) => uid !== userId),
-        });
-        if (userProfile)
-          setUserProfile({
-            ...userProfile,
-            followers: userProfile.followers.filter(
-              (uid) => uid !== authUser.uid
-            ),
-          });
+      const updatedAuthUser = {
+        ...authUser,
+        following: isFollowing
+          ? authUser.following.filter((uid) => uid !== userId)
+          : [...authUser.following, userId],
+      };
+      setAuthUser(updatedAuthUser);
 
-        localStorage.setItem(
-          "user-info",
-          JSON.stringify({
-            ...authUser,
-            following: authUser.following.filter((uid) => uid !== userId),
-          })
-        );
-        setIsFollowing(false);
-      } else {
-        // follow
-        setAuthUser({
-          ...authUser,
-          following: [...authUser.following, userId],
-        });
+      const updatedUserInfo = JSON.stringify(updatedAuthUser);
+      localStorage.setItem("user-info", updatedUserInfo);
 
-        if (userProfile)
-          setUserProfile({
-            ...userProfile,
-            followers: [...userProfile.followers, authUser.uid],
-          });
-
-        localStorage.setItem(
-          "user-info",
-          JSON.stringify({
-            ...authUser,
-            following: [...authUser.following, userId],
-          })
-        );
-        setIsFollowing(true);
-      }
+      setIsFollowing(!isFollowing);
     } catch (error) {
       showToast("Error", error.message, "error");
     } finally {
@@ -79,10 +46,8 @@ const useFollow = (userId) => {
   };
 
   useEffect(() => {
-    if (authUser) {
-      const isFollowing = authUser.following.includes(userId);
-      setIsFollowing(isFollowing);
-    }
+    const isFollowingUser = authUser?.following?.includes(userId);
+    setIsFollowing(isFollowingUser);
   }, [authUser, userId]);
 
   return { isFollowing, isUpdating, handleUserFollow };
