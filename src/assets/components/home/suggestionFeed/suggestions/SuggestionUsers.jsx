@@ -18,10 +18,10 @@ const SuggestionUsers = ({user}) => {
     updateUser({
       ...user,
       followers: isFollowing
-        ? user.followers.filter((follower) => follower.uid !== authUser.uid)
-        : [...user.followers, authUser],
+        ? user.followers.filter((uid) => uid !== authUser.uid)
+        : [...user.followers, authUser.uid],
       following: isFollowing
-        ? user.following.filter((following) => following.uid !== authUser.uid)
+        ? user.following.filter((uid) => uid !== authUser.uid)
         : [...user.following, authUser],
     });
   };
