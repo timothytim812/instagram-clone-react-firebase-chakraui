@@ -22,12 +22,14 @@ import PostFooter from "../../home/Feed/Post/PostFooter";
 import { useAuthStore, useProfileStore } from "../../../../store/store";
 import Caption from "../../../General/Caption";
 import useDeletePost from "../../custom/useDeletePost";
+import useLike from "../../custom/useLike";
 
 const ProfilePost = ({ post,isLoading }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const userProfile = useProfileStore((state) => state.userProfile);
   const authUser = useAuthStore((state) => state.user);
   const {handleDeletePost,isDeleting} = useDeletePost(post);
+  const { handleLikes, isLiked, likes} = useLike(post);
 
   return (
     <>
@@ -55,7 +57,7 @@ const ProfilePost = ({ post,isLoading }) => {
             <Flex>
               <AiFillHeart size={20} />
               <Text fontWeight={"bold"} ml={2}>
-                {post.likes.length}
+                {likes}
               </Text>
             </Flex>
             <Flex>
@@ -156,7 +158,7 @@ const ProfilePost = ({ post,isLoading }) => {
                   ))}
                 </VStack>
                 <Divider my={4} bg={"gray.800"} />
-                <PostFooter isProfilePage={true} post={post} />
+                <PostFooter isProfilePage={true} post={post} likes={likes} isLiked={isLiked} handleLikes={handleLikes} />
               </Flex>
             </Flex>
           </ModalBody>

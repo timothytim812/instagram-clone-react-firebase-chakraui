@@ -7,7 +7,7 @@ import {
   InputRightElement,
   Text,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
+import {  useState } from "react";
 import {
   CommentLogo,
   NotificationsLogo,
@@ -15,20 +15,16 @@ import {
 } from "../../../../images/logos";
 import useComment from "../../../custom/useComment";
 import { useAuthStore } from "../../../../../store/store";
-import useLike from "../../../custom/useLike";
 
-const PostFooter = ({ username, isProfilePage, post }) => {
-  const {handleCommenting,isCommenting} = useComment();
-  const [comment,setComment] = useState('');
-  const authUser = useAuthStore(state => state.user);
-  const {handleLikes,isLiked,isUpdating,likes}=useLike(post);
+const PostFooter = ({ isProfilePage, post, userProfile,likes,handleLikes,isLiked }) => {
+  const { handleCommenting, isCommenting } = useComment();
+  const [comment, setComment] = useState("");
+  const authUser = useAuthStore((state) => state.user);
 
-
-
-  const handleSubmitComment = async() => {
-    await handleCommenting(post.id,comment);
-    setComment('');
-  }
+  const handleSubmitComment = async () => {
+    await handleCommenting(post.id, comment);
+    setComment("");
+  };
 
   return (
     <>
@@ -48,48 +44,48 @@ const PostFooter = ({ username, isProfilePage, post }) => {
         {!isProfilePage && (
           <>
             <Text fontWeight={"bold"} fontSize={"sm"} mb={2}>
-              {username}{" "}
+              {userProfile?.username}
               <Text as={"span"} fontWeight={400}>
-                Lladuno times 💫
+                {post.caption}
               </Text>
             </Text>
-            <Text color={"gray"} fontSize={"sm"}>
-              view all 10,000 comments
+            <Text fontSize="sm" color={"gray"} cursor={"pointer"}>
+              View all {post.comments.length} comments
             </Text>
           </>
         )}
 
         {authUser && (
           <Flex
-          alignItems={"center"}
-          gap={2}
-          justifyContent={"space-between"}
-          w={"full"}
-        >
-          <InputGroup>
-            <Input
-              variant={"flushed"}
-              placeholder="Add a comment....."
-              fontSize={14}
-              value={comment}
-              onChange={(e)=> setComment(e.target.value)}
-            />
-            <InputRightElement>
-              <Button
-                color="blue.400"
-                fontWeight={600}
-                bg="transparent"
+            alignItems={"center"}
+            gap={2}
+            justifyContent={"space-between"}
+            w={"full"}
+          >
+            <InputGroup>
+              <Input
+                variant={"flushed"}
+                placeholder="Add a comment....."
                 fontSize={14}
-                _hover={{ bg: "transparent", color: "white" }}
-                cursor={"pointer"}
-                isLoading={isCommenting}
-                onClick={handleSubmitComment}
-              >
-                Post
-              </Button>
-            </InputRightElement>
-          </InputGroup>
-        </Flex>
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
+              />
+              <InputRightElement>
+                <Button
+                  color="blue.400"
+                  fontWeight={600}
+                  bg="transparent"
+                  fontSize={14}
+                  _hover={{ bg: "transparent", color: "white" }}
+                  cursor={"pointer"}
+                  isLoading={isCommenting}
+                  onClick={handleSubmitComment}
+                >
+                  Post
+                </Button>
+              </InputRightElement>
+            </InputGroup>
+          </Flex>
         )}
       </Box>
     </>
