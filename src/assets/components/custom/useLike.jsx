@@ -26,14 +26,8 @@ const useLike = (post) => {
 
       if (isLiked) {
         setLikes(likes - 1);
-        // localStorage.setItem("posts",  JSON.stringify(post.likes,{
-        //   likes: likes
-        // }));
       } else {
         setLikes(likes + 1);
-        // localStorage.setItem("posts",  JSON.stringify(post.likes,{
-        //   likes: likes
-        // }));
       }
     } catch (e) {
       showToast("Error", e.message, "error");
