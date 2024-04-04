@@ -15,15 +15,12 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { IoSearch } from "react-icons/io5";
-import { SearchLogo } from "../../../images/logos";
-import {  useContext, useRef } from "react";
+import { useContext, useRef } from "react";
 import SuggestionUsers from "../../home/suggestionFeed/suggestions/SuggestionUsers";
 import { SearchContext } from "../../../../App";
 
-
 const SideBarSearchBar = () => {
-
-  const {user,getUserProfile,isUpdating} = useContext(SearchContext)
+  const { user, getUserProfile, isUpdating } = useContext(SearchContext);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const searchRef = useRef(null);
@@ -31,7 +28,8 @@ const SideBarSearchBar = () => {
   const handleSearch = (e) => {
     e.preventDefault();
     getUserProfile(searchRef.current.value);
-  }
+    searchRef.current.value ='';
+  };
 
   return (
     <>
@@ -81,12 +79,11 @@ const SideBarSearchBar = () => {
                 </Button>
               </Flex>
             </form>
-            {user && 
-            <>
-            <SuggestionUsers user={user}/>
-            </>
-          }
-            
+            {user && (
+              <>
+                <SuggestionUsers user={user} />
+              </>
+            )}
           </ModalBody>
         </ModalContent>
       </Modal>
