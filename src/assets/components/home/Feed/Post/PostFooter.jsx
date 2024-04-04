@@ -21,7 +21,7 @@ const PostFooter = ({ username, isProfilePage, post }) => {
   const {handleCommenting,isCommenting} = useComment();
   const [comment,setComment] = useState('');
   const authUser = useAuthStore(state => state.user);
-  // const {handleLikes,isLiked,isUpdating,likes}=useLike(post);
+  const {handleLikes,isLiked,isUpdating,likes}=useLike(post);
 
 
 
@@ -33,7 +33,7 @@ const PostFooter = ({ username, isProfilePage, post }) => {
   return (
     <>
       <Box mb={10} mt={"auto"}>
-        {/* <Flex alignItems={"center"} gap={4} w={"full"} pt={0} mb={2} mt={3}>
+        <Flex alignItems={"center"} gap={4} w={"full"} pt={0} mb={2} mt={3}>
           <Box onClick={handleLikes} cursor={"pointer"} fontSize={18}>
             {!isLiked ? <NotificationsLogo /> : <UnlikeLogo />}
           </Box>
@@ -43,12 +43,12 @@ const PostFooter = ({ username, isProfilePage, post }) => {
         </Flex>
         <Text fontWeight={600} fontSize={"sm"} mb={1}>
           {likes} likes
-        </Text> */}
+        </Text>
 
         {!isProfilePage && (
           <>
             <Text fontWeight={"bold"} fontSize={"sm"} mb={2}>
-              {username}
+              {username}{" "}
               <Text as={"span"} fontWeight={400}>
                 Lladuno times 💫
               </Text>
