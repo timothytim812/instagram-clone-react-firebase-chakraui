@@ -34,6 +34,16 @@ const useFollow = (userId) => {
       };
       setAuthUser(updatedAuthUser);
 
+      if (userProfile) {
+        const updatedUserProfile = {
+          ...userProfile,
+          followers: isFollowing
+            ? userProfile.followers.filter((uid) => uid !== authUser.uid)
+            : [...userProfile.followers, authUser.uid],
+        };
+        setUserProfile(updatedUserProfile);
+      }
+
       const updatedUserInfo = JSON.stringify(updatedAuthUser);
       localStorage.setItem("user-info", updatedUserInfo);
 
