@@ -1,12 +1,7 @@
-import {
-  Avatar,
-  Box,
-  Button,
-  Flex,
-  SkeletonCircle,
-} from "@chakra-ui/react";
+import { Avatar, Box, Button, Flex, SkeletonCircle,Text } from "@chakra-ui/react";
 import useFollow from "../../../custom/useFollow";
 import { Link } from "react-router-dom";
+import { CreatedAtTimeConversion } from "../../../../utils/CreatedAtTimeConversion";
 
 const PostHeader = ({ post, userProfile }) => {
   const { handleUserFollow, isFollowing, isUpdating } = useFollow(
@@ -35,7 +30,11 @@ const PostHeader = ({ post, userProfile }) => {
         <Flex fontSize={14} fontWeight={"bold"} gap={2} mx={1}>
           {userProfile?.username}
         </Flex>
-        <Box color={"gray.500"}>• 1w</Box>
+        <Box color={"gray.500"}>
+          <Text fontSize={12}>
+            • {CreatedAtTimeConversion(post.createdAt)}
+          </Text>
+        </Box>
       </Flex>
       <Box cursor={"pointer"}>
         {isFollowing ? (

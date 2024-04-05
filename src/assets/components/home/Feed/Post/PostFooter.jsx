@@ -7,7 +7,7 @@ import {
   InputRightElement,
   Text,
 } from "@chakra-ui/react";
-import {  useState } from "react";
+import { useState } from "react";
 import {
   CommentLogo,
   NotificationsLogo,
@@ -15,8 +15,18 @@ import {
 } from "../../../../images/logos";
 import useComment from "../../../custom/useComment";
 import { useAuthStore } from "../../../../../store/store";
+import Caption from "../../../../General/Caption";
+import { Link } from "react-router-dom";
+import { CreatedAtTimeConversion } from "../../../../utils/CreatedAtTimeConversion";
 
-const PostFooter = ({ isProfilePage, post, userProfile,likes,handleLikes,isLiked }) => {
+const PostFooter = ({
+  isProfilePage,
+  post,
+  userProfile,
+  likes,
+  handleLikes,
+  isLiked,
+}) => {
   const { handleCommenting, isCommenting } = useComment();
   const [comment, setComment] = useState("");
   const authUser = useAuthStore((state) => state.user);
@@ -43,12 +53,19 @@ const PostFooter = ({ isProfilePage, post, userProfile,likes,handleLikes,isLiked
 
         {!isProfilePage && (
           <>
-            <Text fontWeight={"bold"} fontSize={"sm"} mb={2}>
-              {userProfile?.username}
-              <Text as={"span"} fontWeight={400}>
-                {post.caption}
-              </Text>
-            </Text>
+              <Flex direction={"column"}>
+                <Flex gap={2} alignItems={"center"}>
+                  <Link to={`/${userProfile?.username}`}>
+                    <Text fontWeight={"bold"} fontSize={12}>
+                      {userProfile?.username}
+                    </Text>
+                  </Link>
+                  <Text fontSize={14}>{post.caption}</Text>
+                </Flex>
+                <Text fontSize={12} color={"gray"}>
+                  {CreatedAtTimeConversion(post.createdAt)}
+                </Text>
+              </Flex>
             <Text fontSize="sm" color={"gray"} cursor={"pointer"}>
               View all {post.comments.length} comments
             </Text>

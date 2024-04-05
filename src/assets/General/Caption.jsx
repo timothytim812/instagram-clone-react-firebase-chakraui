@@ -3,7 +3,7 @@ import { useProfileStore } from "../../store/store";
 import { Link } from "react-router-dom";
 import { CreatedAtTimeConversion } from "../utils/CreatedAtTimeConversion";
 
-const Caption = ({ post,isLoading }) => {
+const Caption = ({ post,isLoading,isProfilePage }) => {
   const userProfile = useProfileStore((state) => state.userProfile);
 
   if (isLoading) {
