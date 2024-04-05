@@ -1,5 +1,6 @@
 import {
   Avatar,
+  Box,
   Button,
   Divider,
   Flex,
@@ -23,13 +24,15 @@ import { useAuthStore, useProfileStore } from "../../../../store/store";
 import Caption from "../../../General/Caption";
 import useDeletePost from "../../custom/useDeletePost";
 import useLike from "../../custom/useLike";
+import { Link } from "react-router-dom";
+import { CreatedAtTimeConversion } from "../../../utils/CreatedAtTimeConversion";
 
-const ProfilePost = ({ post,isLoading }) => {
+const ProfilePost = ({ post, isLoading }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const userProfile = useProfileStore((state) => state.userProfile);
   const authUser = useAuthStore((state) => state.user);
-  const {handleDeletePost,isDeleting} = useDeletePost(post);
-  const { handleLikes, isLiked, likes} = useLike(post);
+  const { handleDeletePost, isDeleting } = useDeletePost(post);
+  const { handleLikes, isLiked, likes } = useLike(post);
 
   return (
     <>
@@ -119,16 +122,27 @@ const ProfilePost = ({ post,isLoading }) => {
                 display={{ base: "none", md: "flex" }}
               >
                 <Flex alignItems={"center"} justifyContent={"space-between"}>
-                  <Flex alignItems={"center"} gap={4}>
-                    <Avatar
-                      src={userProfile.profilePicURL}
-                      size={"sm"}
-                      name="Timothy Benjamin"
-                    />
-                    <Text fontWeight={"bold"} fontSize={12}>
-                      {userProfile.username}
-                    </Text>
-                  </Flex>
+                    <Flex alignItems={"center"} gap={2}>
+                      {userProfile ? (
+                        <Link to={`/${userProfile?.username}`}>
+                          <Avatar
+                            src={userProfile?.profilePicURL}
+                            alt="user profile pic"
+                            size={"sm"}
+                          />
+                        </Link>
+                      ) : (
+                        <SkeletonCircle size="10" />
+                      )}
+                      <Flex fontSize={13} fontWeight={"bold"} gap={2} mx={1}>
+                        {userProfile?.username}
+                      </Flex>
+                      <Box color={"gray.500"}>
+                        <Text fontSize={12}>
+                          • {CreatedAtTimeConversion(post.createdAt)}
+                        </Text>
+                      </Box>
+                    </Flex>
                   {authUser?.uid === userProfile.uid && (
                     <Button
                       size={"sm"}
@@ -151,14 +165,24 @@ const ProfilePost = ({ post,isLoading }) => {
                   overflowY={"auto"}
                 >
                   {post.caption && <Caption post={post} />}
-                  {post.comments.map((comment) =>(
+                  {post.comments.map((comment) => (
                     <>
-                    <Comment key={comment.id} comment={comment} isLoading={isLoading} />
+                      <Comment
+                        key={comment.id}
+                        comment={comment}
+                        isLoading={isLoading}
+                      />
                     </>
                   ))}
                 </VStack>
                 <Divider my={4} bg={"gray.800"} />
-                <PostFooter isProfilePage={true} post={post} likes={likes} isLiked={isLiked} handleLikes={handleLikes} />
+                <PostFooter
+                  isProfilePage={true}
+                  post={post}
+                  likes={likes}
+                  isLiked={isLiked}
+                  handleLikes={handleLikes}
+                />
               </Flex>
             </Flex>
           </ModalBody>
