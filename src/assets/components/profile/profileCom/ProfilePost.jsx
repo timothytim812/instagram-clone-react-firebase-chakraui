@@ -122,27 +122,22 @@ const ProfilePost = ({ post, isLoading }) => {
                 display={{ base: "none", md: "flex" }}
               >
                 <Flex alignItems={"center"} justifyContent={"space-between"}>
-                    <Flex alignItems={"center"} gap={2}>
-                      {userProfile ? (
-                        <Link to={`/${userProfile?.username}`}>
-                          <Avatar
-                            src={userProfile?.profilePicURL}
-                            alt="user profile pic"
-                            size={"sm"}
-                          />
-                        </Link>
-                      ) : (
-                        <SkeletonCircle size="10" />
-                      )}
-                      <Flex fontSize={13} fontWeight={"bold"} gap={2} mx={1}>
-                        {userProfile?.username}
-                      </Flex>
-                      <Box color={"gray.500"}>
-                        <Text fontSize={12}>
-                          • {CreatedAtTimeConversion(post.createdAt)}
-                        </Text>
-                      </Box>
+                  <Flex alignItems={"center"} gap={2}>
+                    {userProfile ? (
+                      <Link to={`/${userProfile?.username}`}>
+                        <Avatar
+                          src={userProfile?.profilePicURL}
+                          alt="user profile pic"
+                          size={"sm"}
+                        />
+                      </Link>
+                    ) : (
+                      <SkeletonCircle size="10" />
+                    )}
+                    <Flex fontSize={13} fontWeight={"bold"} gap={2} mx={1}>
+                      {userProfile?.username}
                     </Flex>
+                  </Flex>
                   {authUser?.uid === userProfile.uid && (
                     <Button
                       size={"sm"}

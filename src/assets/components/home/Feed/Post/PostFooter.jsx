@@ -49,6 +49,11 @@ const PostFooter = ({
         <Text fontWeight={600} fontSize={"sm"} mb={1}>
           {likes} likes
         </Text>
+        {isProfilePage && (
+          <Text fontSize={12} color={"gray"}>
+            Posted {CreatedAtTimeConversion(post.createdAt)}
+          </Text>
+        )}
 
         {!isProfilePage && (
           <>
@@ -61,9 +66,6 @@ const PostFooter = ({
                 </Link>
                 <Text fontSize={14}>{post.caption}</Text>
               </Flex>
-              <Text fontSize={12} color={"gray"}>
-                {CreatedAtTimeConversion(post.createdAt)}
-              </Text>
             </Flex>
             <Text fontSize="sm" color={"gray"} cursor={"pointer"}>
               View all {post.comments.length} comments

@@ -34,16 +34,22 @@ const PostHeader = ({ post, userProfile }) => {
         ) : (
           <SkeletonCircle size="10" />
         )}
-        {userProfile ? <>
-          <Link to={`/${userProfile?.username}`}>
-          <Flex fontSize={14} fontWeight={"bold"} gap={2} mx={1}>
-            {userProfile?.username}
-          </Flex>
-        </Link>
-        <Box color={"gray.500"}>
-          <Text fontSize={12}>• {CreatedAtTimeConversion(post.createdAt)}</Text>
-        </Box>
-        </>: <SkeletonCircle width={'100px'} h={'10px'} />}
+        {userProfile ? (
+          <>
+            <Link to={`/${userProfile?.username}`}>
+              <Flex fontSize={14} fontWeight={"bold"} gap={2} mx={1}>
+                {userProfile?.username}
+              </Flex>
+            </Link>
+            <Box color={"gray.500"}>
+              <Text fontSize={12} fontWeight={"bold"}>
+                • {CreatedAtTimeConversion(post.createdAt)}
+              </Text>
+            </Box>
+          </>
+        ) : (
+          <SkeletonCircle width={"100px"} h={"10px"} />
+        )}
       </Flex>
       <Box cursor={"pointer"}>
         {isFollowing ? (
