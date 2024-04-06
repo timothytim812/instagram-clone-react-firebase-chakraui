@@ -1,6 +1,5 @@
 import {
   Avatar,
-  Box,
   Button,
   Divider,
   Flex,
@@ -25,7 +24,6 @@ import Caption from "../../../General/Caption";
 import useDeletePost from "../../custom/useDeletePost";
 import useLike from "../../custom/useLike";
 import { Link } from "react-router-dom";
-import { CreatedAtTimeConversion } from "../../../utils/CreatedAtTimeConversion";
 
 const ProfilePost = ({ post, isLoading }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
