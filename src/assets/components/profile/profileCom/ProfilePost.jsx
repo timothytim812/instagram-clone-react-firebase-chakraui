@@ -158,10 +158,10 @@ const ProfilePost = ({ post, isLoading }) => {
                   overflowY={"auto"}
                 >
                   {post.caption && <Caption post={post} />}
-                  {post.comments.map((comment) => (
+                  {post.comments.map((comment,i) => (
                     <>
                       <Comment
-                        key={comment.id}
+                        key={i}
                         comment={comment}
                         isLoading={isLoading}
                       />

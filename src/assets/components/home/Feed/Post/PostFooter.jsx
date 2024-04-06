@@ -6,6 +6,7 @@ import {
   InputGroup,
   InputRightElement,
   Text,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import {
@@ -17,6 +18,7 @@ import useComment from "../../../custom/useComment";
 import { useAuthStore } from "../../../../../store/store";
 import { Link } from "react-router-dom";
 import { CreatedAtTimeConversion } from "../../../../utils/CreatedAtTimeConversion";
+import FeedComments from "../../../../General/FeedComments";
 
 const PostFooter = ({
   isProfilePage,
@@ -29,6 +31,7 @@ const PostFooter = ({
   const { handleCommenting, isCommenting } = useComment();
   const [comment, setComment] = useState("");
   const authUser = useAuthStore((state) => state.user);
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const handleSubmitComment = async () => {
     await handleCommenting(post.id, comment);
@@ -67,9 +70,10 @@ const PostFooter = ({
                 <Text fontSize={14}>{post.caption}</Text>
               </Flex>
             </Flex>
-            <Text fontSize="sm" color={"gray"} cursor={"pointer"}>
+            <Text fontSize="sm" color={"gray"} cursor={"pointer"} onClick={onOpen}>
               View all {post.comments.length} comments
             </Text>
+            {isOpen ? <FeedComments isOpen={isOpen} onClose={onClose} post={post} /> : null}
           </>
         )}
 

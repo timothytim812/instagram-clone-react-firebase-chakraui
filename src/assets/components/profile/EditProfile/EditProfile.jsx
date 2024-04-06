@@ -15,7 +15,7 @@ import {
   ModalOverlay,
   Stack,
 } from "@chakra-ui/react";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useAuthStore } from "../../../../store/store";
 import usePicturePreview from "../../custom/usePicturePreview";
 import useEditProfile from "../../custom/useEditProfile";
@@ -28,7 +28,14 @@ const EditProfile = ({ isOpen, onClose }) => {
     bio: "",
   });
 
-  const authUser = useAuthStore((state) => state.user);
+const authUser = useAuthStore((state) => state.user);
+useEffect(() => {
+  setInputs({
+    fullname: authUser.fullname,
+    username: authUser.username,
+    bio: authUser.bio,
+  });
+}, [isOpen, authUser]);
 
   const fileRef = useRef(null);
 
@@ -105,7 +112,7 @@ const EditProfile = ({ isOpen, onClose }) => {
                     placeholder={"Full Name"}
                     size={"sm"}
                     type={"text"}
-                    value={inputs.fullname || authUser.fullname}
+                    value={inputs.fullname }
                     onChange={(e) =>
                       setInputs({ ...inputs, fullname: e.target.value })
                     }
@@ -119,7 +126,7 @@ const EditProfile = ({ isOpen, onClose }) => {
                     placeholder={"Username"}
                     size={"sm"}
                     type={"text"}
-                    value={inputs.username || authUser.username}
+                    value={inputs.username}
                     onChange={(e) =>
                       setInputs({ ...inputs, username: e.target.value })
                     }
@@ -133,7 +140,7 @@ const EditProfile = ({ isOpen, onClose }) => {
                     placeholder={"Bio"}
                     size={"sm"}
                     type={"text"}
-                    value={inputs.bio || authUser.bio}
+                    value={inputs.bio}
                     onChange={(e) =>
                       setInputs({ ...inputs, bio: e.target.value })
                     }
