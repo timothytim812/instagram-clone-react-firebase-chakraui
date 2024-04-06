@@ -5,9 +5,8 @@ import { useAuthStore } from "../../../../../store/store";
 import { useContext } from "react";
 import { SearchContext } from "../../../../../App";
 
-const SuggestionUsers = ({user}) => {
-
-  const {updateUser} = useContext(SearchContext);
+const SuggestionUsers = ({ user }) => {
+  const { updateUser } = useContext(SearchContext);
 
   const { isFollowing, isUpdating, handleUserFollow } = useFollow(user.uid);
   const authUser = useAuthStore((state) => state.user);
@@ -30,7 +29,9 @@ const SuggestionUsers = ({user}) => {
     <>
       <Flex justifyContent={"space-between"} alignItems={"center"} w={"full"}>
         <Flex alignItems={"center"} gap={2}>
-          <Avatar src={user?.profilePicURL} size={"md"} />
+          <Link to={`/${user?.username}`}>
+            <Avatar src={user?.profilePicURL} size={"md"} />
+          </Link>
           <VStack spacing={2} alignItems={"flex-start"}>
             <Link to={`/${user?.username}`} fontSize={12} fontWeight={"bold"}>
               {user.username}
