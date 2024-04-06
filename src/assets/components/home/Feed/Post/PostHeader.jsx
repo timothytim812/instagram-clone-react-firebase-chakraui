@@ -1,4 +1,11 @@
-import { Avatar, Box, Button, Flex, SkeletonCircle,Text } from "@chakra-ui/react";
+import {
+  Avatar,
+  Box,
+  Button,
+  Flex,
+  SkeletonCircle,
+  Text,
+} from "@chakra-ui/react";
 import useFollow from "../../../custom/useFollow";
 import { Link } from "react-router-dom";
 import { CreatedAtTimeConversion } from "../../../../utils/CreatedAtTimeConversion";
@@ -27,13 +34,13 @@ const PostHeader = ({ post, userProfile }) => {
         ) : (
           <SkeletonCircle size="10" />
         )}
-        <Flex fontSize={14} fontWeight={"bold"} gap={2} mx={1}>
-          {userProfile?.username}
-        </Flex>
+        <Link to={`/${userProfile?.username}`}>
+          <Flex fontSize={14} fontWeight={"bold"} gap={2} mx={1}>
+            {userProfile?.username}
+          </Flex>
+        </Link>
         <Box color={"gray.500"}>
-          <Text fontSize={12}>
-            • {CreatedAtTimeConversion(post.createdAt)}
-          </Text>
+          <Text fontSize={12}>• {CreatedAtTimeConversion(post.createdAt)}</Text>
         </Box>
       </Flex>
       <Box cursor={"pointer"}>
