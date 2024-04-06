@@ -12,7 +12,6 @@ import Posts from "./Post/Posts";
 
 const FeedMain = () => {
   const { isLoading, posts } = useToLoadFeed();
-  
 
   return (
     <Container maxW={"container.sm"} py={10} px={2}>
@@ -37,6 +36,22 @@ const FeedMain = () => {
             <Posts key={post.id} post={post} />
           </>
         ))}
+      {!isLoading && posts.length === 0 && (
+        <>
+          <Flex
+            justifyContent={"center"}
+            alignItems={"center"}
+            flexDirection={"column"}
+            mt={"30vh"}
+            mb={"30vh"}
+          >
+            <Text fontSize={"md"} color={"red.400"}>
+              You don't follow anyone !
+            </Text>
+            <Text>Follow people to see their posts</Text>
+          </Flex>
+        </>
+      )}
     </Container>
   );
 };
