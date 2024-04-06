@@ -15,7 +15,6 @@ import {
 } from "../../../../images/logos";
 import useComment from "../../../custom/useComment";
 import { useAuthStore } from "../../../../../store/store";
-import Caption from "../../../../General/Caption";
 import { Link } from "react-router-dom";
 import { CreatedAtTimeConversion } from "../../../../utils/CreatedAtTimeConversion";
 
@@ -53,19 +52,19 @@ const PostFooter = ({
 
         {!isProfilePage && (
           <>
-              <Flex direction={"column"}>
-                <Flex gap={2} alignItems={"center"}>
-                  <Link to={`/${userProfile?.username}`}>
-                    <Text fontWeight={"bold"} fontSize={12}>
-                      {userProfile?.username}
-                    </Text>
-                  </Link>
-                  <Text fontSize={14}>{post.caption}</Text>
-                </Flex>
-                <Text fontSize={12} color={"gray"}>
-                  {CreatedAtTimeConversion(post.createdAt)}
-                </Text>
+            <Flex direction={"column"}>
+              <Flex gap={2} alignItems={"center"}>
+                <Link to={`/${userProfile?.username}`}>
+                  <Text fontWeight={"bold"} fontSize={12}>
+                    {userProfile?.username}
+                  </Text>
+                </Link>
+                <Text fontSize={14}>{post.caption}</Text>
               </Flex>
+              <Text fontSize={12} color={"gray"}>
+                {CreatedAtTimeConversion(post.createdAt)}
+              </Text>
+            </Flex>
             <Text fontSize="sm" color={"gray"} cursor={"pointer"}>
               View all {post.comments.length} comments
             </Text>
