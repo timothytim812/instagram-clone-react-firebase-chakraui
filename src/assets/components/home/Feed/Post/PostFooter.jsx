@@ -45,9 +45,10 @@ const PostFooter = ({
           <Box onClick={handleLikes} cursor={"pointer"} fontSize={18}>
             {!isLiked ? <NotificationsLogo /> : <UnlikeLogo />}
           </Box>
-          <Box cursor={"pointer"} fontSize={18}>
+          <Box cursor={"pointer"} fontSize={18} onClick={onOpen}>
             <CommentLogo />
           </Box>
+          {isOpen ? <FeedComments isOpen={isOpen} onClose={onClose} post={post} /> : null}
         </Flex>
         <Text fontWeight={600} fontSize={"sm"} mb={1}>
           {likes} likes
